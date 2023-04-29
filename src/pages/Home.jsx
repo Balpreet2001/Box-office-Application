@@ -1,33 +1,23 @@
 import { useState } from 'react';
 import { searchForShows } from './../api/tvmaze';
 import { searchForPeople } from './../api/tvmaze';
+import SearchForm from '../components/SearchForm';
 
 const Home = () => {
-  const [SearchStr, setSearchStr] = useState('');
   const [apiData, setapiData] = useState(null);
   const [apiDataError, setapiDataError] = useState(null);
-  const [searchOption, setsearchOption] = useState('shows');
 
-  const onSearchonInputChange = ev => {
-    setSearchStr(ev.target.value);
-  };
-
-  const onRadiochange = ev => {
-    setsearchOption(ev.target.value);
-  };
-
-  const onSearch = async ev => {
-    ev.preventDefault();
-
+  const onSearch = async ({ query, searchOption }) => {
     try {
       setapiDataError(null);
+      let result;
       if (searchOption === 'shows') {
-        const result = await searchForShows(SearchStr);
-        setapiData(result);
+        result = await searchForShows(query);
       } else {
-        const result = await searchForPeople(SearchStr);
-        setapiData(result);
+        result = await searchForPeople(query);
       }
+
+      setapiData(result);
     } catch (error) {
       setapiDataError(error);
     }
@@ -50,33 +40,7 @@ const Home = () => {
 
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <input type="text" value={SearchStr} onChange={onSearchonInputChange} />
-
-        <label>
-          Shows
-          <input
-            type="radio"
-            name="search-options"
-            value="shows"
-            checked={searchOption === 'shows'}
-            onChange={onRadiochange}
-          />
-        </label>
-
-        <label>
-          Actors
-          <input
-            type="radio"
-            name="search-options"
-            value="Actors"
-            checked={searchOption === 'actors'}
-            onChange={onRadiochange}
-          />
-        </label>
-
-        <button type="submit">Search</button>
-      </form>
+      <SearchForm onSearch={onSearch} />
 
       <div>{renderApiData()}</div>
     </div>
