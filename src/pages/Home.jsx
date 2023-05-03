@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
 import { searchForShows } from './../api/tvmaze';
 import { searchForPeople } from './../api/tvmaze';
 import SearchForm from '../components/SearchForm';
@@ -18,9 +18,8 @@ const Home = () => {
 
     enabled: !!filter,
 
-    refetchOnWindowFocus : false,
+    refetchOnWindowFocus: false,
   });
-
 
   const onSearch = async ({ query, searchOption }) => {
     setFilter({ query, searchOption });
