@@ -1,11 +1,10 @@
 import ShowCard from './ShowCard';
 import {useStarredShows} from '../../lib/useStarredShows'
 const ShowGrid = ({ shows }) => {
-  
-    
-let showimage = require('../../assets/show-not-found.png');
+  // eslint-disable-next-line
+  let showimage = require('../../assets/show-not-found.png');
 
-const [starredShows, dispatchStarredShows ] = useStarredShows()
+  const [starredShows, dispatchStarredShows] = useStarredShows();
 
   const onStarMeClick = showId => {
     const isStarred = starredShows.includes(showId);

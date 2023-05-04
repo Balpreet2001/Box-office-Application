@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import {useSearchStr} from '../lib/usepersistedSearch'
 
 
 const SearchForm = ( {onSearch} ) => {
   const [searchOption, setsearchOption] = useState('shows');
-  const [SearchStr, setSearchStr] = useState('');
+
+  const [SearchStr, setSearchStr] = useSearchStr();
 
 
 
