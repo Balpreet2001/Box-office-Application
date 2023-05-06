@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState, useReducer } from 'react';
+import { useState} from 'react';
 import { searchForShows } from './../api/tvmaze';
 import { searchForPeople } from './../api/tvmaze';
 import SearchForm from '../components/SearchForm';
 import ShowGrid from '../components/shows/ShowGrid';
 import ActorGrid from '../components/actors/ActorGrid';
-import styled , {css , ThemeProvider} from 'styled-components'
+import {TextCenter} from '../components/common/TextCenter'
 
 
 const Home = () => {
@@ -29,11 +29,11 @@ const Home = () => {
 
   const renderApiData = () => {
     if (apiDataError) {
-      return <div>Error occured : {apiDataError.message}</div>;
+      return <TextCenter>Error occured : {apiDataError.message}</TextCenter>;
     }
 
     if (apiData?.length === 0) {
-      return <div>no results</div>;
+      return <TextCenter>no results</TextCenter>;
     }
 
     if (apiData) {
@@ -48,11 +48,11 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <TextCenter>
       <SearchForm onSearch={onSearch} />
 
-      <div>{renderApiData()}</div>
-    </div>
+      <TextCenter>{renderApiData()}</TextCenter>
+    </TextCenter>
   );
 };
 

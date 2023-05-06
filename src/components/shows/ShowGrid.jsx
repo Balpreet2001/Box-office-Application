@@ -1,5 +1,6 @@
 import ShowCard from './ShowCard';
 import {useStarredShows} from '../../lib/useStarredShows'
+import {FlexGrid} from '../common/FlexGrid'
 const ShowGrid = ({ shows }) => {
   // eslint-disable-next-line
   let showimage = require('../../assets/show-not-found.png');
@@ -13,7 +14,7 @@ const ShowGrid = ({ shows }) => {
     } else [dispatchStarredShows({ type: 'STAR', showId })];
   };
   return (
-    <div>
+    <FlexGrid>
       {shows.map(data => (
         <ShowCard
           key={data.show.id}
@@ -25,7 +26,7 @@ const ShowGrid = ({ shows }) => {
           isStarred={starredShows.includes(data.show.id)}
         />
       ))}
-    </div>
+    </FlexGrid>
   );
 };
 
