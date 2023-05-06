@@ -1,12 +1,25 @@
-import styled from 'styled-components'
-import { SearchImgWrapper ,SearchCard} from '../common/SearchCard'
-import {StarIcon} from '../common/StarIcon'
+import { useRef } from 'react';
+import styled from 'styled-components';
+import { SearchImgWrapper, SearchCard } from '../common/SearchCard';
+import { StarIcon } from '../common/StarIcon';
 
 const ShowCard = ({ name, image, id, summary, onStarMeClick, isStarred }) => {
   const summaryStripped = summary
     ? summary.split(' ').slice(0, 10).join(' ').replace(/<.+?>/g, '') + '....'
     : 'No description';
 
+  const starBtnRef = useRef();
+
+  const starBtnClicked = () =>{
+    onStarMeClick(id);
+    const starBtnEl = starBtnRef.current;
+
+    if(isStarred){
+      starBtnEl.classList.remove('animate')
+    } else {
+     starBtnEl.classList.add('animate'); 
+    }
+  }
   return (
     <SearchCard>
       <SearchImgWrapper>
@@ -20,16 +33,20 @@ const ShowCard = ({ name, image, id, summary, onStarMeClick, isStarred }) => {
         <a href={`/show/${id}`} target="_blank" rel="noreferrer">
           Read more
         </a>
-        <StarBtn type="button" onClick={() => onStarMeClick(id)}>
-          <StarIcon active ={isStarred} />
+        <StarBtn
+          ref={starBtnRef}
+          type="button"
+          onClick={starBtnClicked}
+          className={isStarred && 'animate'}
+        >
+          <StarIcon active={isStarred} />
         </StarBtn>
       </ActionSection>
     </SearchCard>
   );
 };
 
-export default ShowCard
-
+export default ShowCard;
 
 const ActionSection = styled.div`
   margin-top: 15px;
@@ -57,5 +74,21 @@ const StarBtn = styled.button`
   align-items: center;
   &:hover {
     cursor: pointer;
+  }
+  &.animate {
+    ${StarIcon} {
+      animation: increase 0.75s ease-in forwards;
+      @keyframes increase {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(2) rotate(-55deg);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
   }
 `;
