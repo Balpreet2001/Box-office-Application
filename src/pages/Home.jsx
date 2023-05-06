@@ -7,11 +7,6 @@ import ShowGrid from '../components/shows/ShowGrid';
 import ActorGrid from '../components/actors/ActorGrid';
 import styled , {css , ThemeProvider} from 'styled-components'
 
-const theme = {
-  colors: {
-    main : 'red'
-  }
-}
 
 const Home = () => {
   const [filter, setFilter] = useState(null);

@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import {useSearchStr} from '../lib/usepersistedSearch'
+import { useSearchStr } from '../lib/usepersistedSearch';
+import CustomRadio from './CustomRadio';
 
-
-const SearchForm = ( {onSearch} ) => {
+const SearchForm = ({ onSearch }) => {
   const [searchOption, setsearchOption] = useState('shows');
 
   const [SearchStr, setSearchStr] = useSearchStr();
-
-
-
 
   const onSearchonInputChange = ev => {
     setSearchStr(ev.target.value);
@@ -18,43 +15,37 @@ const SearchForm = ( {onSearch} ) => {
     setsearchOption(ev.target.value);
   };
 
-  const onSubmit = ev =>{
-     ev.preventDefault();
+  const onSubmit = ev => {
+    ev.preventDefault();
 
-     const options = {
-          query: SearchStr ,
-          searchOption
-     }
+    const options = {
+      query: SearchStr,
+      searchOption,
+    };
 
-     onSearch(options)
-  }
+    onSearch(options);
+  };
 
   return (
     <div>
       <form onSubmit={onSubmit}>
         <input type="text" value={SearchStr} onChange={onSearchonInputChange} />
 
-        <label>
-          Shows
-          <input
-            type="radio"
-            name="search-options"
-            value="shows"
-            checked={searchOption === 'shows'}
-            onChange={onRadiochange}
-          />
-        </label>
+        <CustomRadio
+          label="shows"
+          name="search-options"
+          value="shows"
+          checked={searchOption === 'shows'}
+          onChange={onRadiochange}
+        />
 
-        <label>
-          Actors
-          <input
-            type="radio"
-            name="search-options"
-            value="Actors"
-            checked={searchOption === 'actors'}
-            onChange={onRadiochange}
-          />
-        </label>
+        <CustomRadio
+          label="Actors"
+          name="search-options"
+          value="actors"
+          checked={searchOption === 'actors'}
+          onChange={onRadiochange}
+        />
 
         <button type="submit">Search</button>
       </form>
